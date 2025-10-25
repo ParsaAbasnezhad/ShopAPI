@@ -1,12 +1,11 @@
-from django.core.serializers import serialize
-from django.shortcuts import render
-from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from serializers import ProductSerializer
-from models import Product
+from .models import Product
+from .serializers import ProductSerializer
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from rest_framework.authentication import TokenAuthentication
+
 
 
 class ProductView(APIView):
@@ -52,3 +51,10 @@ class ProductUpdate(APIView):
         product = self.get_object(pk)
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+class CheckToken(APIView):
+    # authentication_classes = [TokenAuthentication]
+    def get(self, request):
+        return Response(status=status.HTTP_200_OK)
