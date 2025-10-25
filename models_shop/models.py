@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from rest_framework.utils import timezone
 
@@ -7,7 +9,7 @@ class Category(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="توضیحات")
     image = models.ImageField(upload_to="categories/", blank=True, null=True, verbose_name="تصویر")
     is_active = models.BooleanField(default=True, verbose_name="فعال")
-    created_at = models.DateTimeField(default=timezone.now, verbose_name="تاریخ ایجاد")
+    created_at = models.DateTimeField(default=datetime.UTC, verbose_name="تاریخ ایجاد")
 
     class Meta:
         ordering = ['name']
