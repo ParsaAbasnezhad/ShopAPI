@@ -1,10 +1,10 @@
 from django.db import models
-from accounts.managers import UserManager
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
+from accounts.managers import UserManager
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
         verbose_name=_('username'),
         max_length=40,
@@ -12,7 +12,9 @@ class User(AbstractBaseUser):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+
     objects = UserManager()
+
     USERNAME_FIELD = 'username'
 
     class Meta:
@@ -21,12 +23,6 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.username
-
-    def has_perm(self, perm, obj=None):
-        return True
-
-    def has_module_perms(self, app_label):
-        return True
 
     @property
     def is_staff(self):
