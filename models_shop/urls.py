@@ -1,14 +1,10 @@
-from django.urls import path
-from .views import ProductView, ProductUpdate, CheckToken
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ProductsViewModel
+
+router = DefaultRouter()
+router.register(r'products', ProductsViewModel, basename='product')
 
 urlpatterns = [
-    # برای get و post
-    path('products/', ProductView.as_view(), name='product-list'),
-    # برای getکردن یهک product و put و patch و delete
-    path('products/<int:pk>/', ProductUpdate.as_view(), name='product-detail'),
-    path('check/', CheckToken.as_view(), name='check-token'),
-
+    path('', include(router.urls)),
 ]
-
-# ProductUpdate
-# ProductView
